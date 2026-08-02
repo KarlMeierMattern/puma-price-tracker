@@ -56,15 +56,20 @@ def scrape_all(config: dict) -> list[PriceQuote]:
     return quotes
 
 
+def alert_threshold(config: dict) -> int:
+    product = config["product"]
+    return product.get("alert_threshold", product.get("retail_price", 0))
+
+
 def pick_alerts(quotes: list[PriceQuote], config: dict, data: dict) -> list[PriceQuote]:
-    retail_price = config["product"]["retail_price"]
+    threshold = alert_threshold(config)
     color_required = config.get("color_match_required", True)
     alerts: list[PriceQuote] = []
 
     for quote in quotes:
         if not quote.ok or quote.price_int is None:
             continue
-        if quote.price_int >= retail_price:
+        if quote.price_int >= threshold:
             continue
         if color_required and not quote.color_matched:
             continue
@@ -75,14 +80,14 @@ def pick_alerts(quotes: list[PriceQuote], config: dict, data: dict) -> list[Pric
 
 
 def print_report(quotes: list[PriceQuote], config: dict) -> None:
-    retail_price = config["product"]["retail_price"]
+    threshold = alert_threshold(config)
     print(f"\n{config['product']['name']}")
-    print(f"Retail target: R{retail_price:,}".replace(",", " "))
+    print(f"Alert threshold: R{threshold:,}".replace(",", " "))
     print("-" * 72)
 
     for quote in quotes:
         if quote.ok:
-            flag = "SALE" if quote.price_int is not None and quote.price_int < retail_price else "    "
+            flag = "SALE" if quote.price_int is not None and quote.price_int < threshold else "    "
             colour = "matched" if quote.color_matched else "unverified"
             stock = (
                 "in stock"

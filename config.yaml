@@ -6,11 +6,12 @@ product:
   color_keywords:
     - "slate sky"
     - "moody gray"
-  retail_price: 3500
+  msrp: 3999
+  alert_threshold: 3500
   currency: ZAR
   image_url: "https://images.puma.net/images/312123/30/sv01/fnd/ZAF/w/2000/h/2000/"
 
-# Alert when price is strictly below retail_price.
+# Alert when price is strictly below alert_threshold.
 # Set color_match_required: false to also alert on unverified colorway pages.
 color_match_required: false
 

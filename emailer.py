@@ -17,8 +17,8 @@ def _fmt_price(price: int) -> str:
     return f"R {price:,}".replace(",", "\u202f")
 
 
-def _quote_row(quote: PriceQuote, retail_price: int) -> str:
-    saving = retail_price - (quote.price_int or retail_price)
+def _quote_row(quote: PriceQuote, msrp: int) -> str:
+    saving = msrp - (quote.price_int or msrp)
     stock = (
         "In stock"
         if quote.in_stock is True
@@ -52,15 +52,16 @@ def send_alert(product_cfg: dict, quotes: Iterable[PriceQuote]) -> None:
         raise RuntimeError("Set RESEND_API_KEY, FROM_EMAIL, and TO_EMAIL")
 
     quotes = list(quotes)
-    retail_price = product_cfg["retail_price"]
+    threshold = product_cfg.get("alert_threshold", product_cfg.get("retail_price", 0))
+    msrp = product_cfg.get("msrp", threshold)
     product_name = product_cfg["name"]
-    rows = "".join(_quote_row(q, retail_price) for q in quotes)
-    cheapest = min(q.price_int or retail_price for q in quotes)
+    rows = "".join(_quote_row(q, msrp) for q in quotes)
+    cheapest = min(q.price_int or threshold for q in quotes)
 
     html_body = f"""
     <div style="font-family:Arial,sans-serif;max-width:640px;margin:0 auto;color:#222">
       <h1 style="font-size:20px">Price drop: {product_name}</h1>
-      <p>Retail on PUMA is {_fmt_price(retail_price)}. These South African listings are below that now.</p>
+      <p>Your alert threshold is {_fmt_price(threshold)} (PUMA full price is {_fmt_price(msrp)}). These listings are below your target now.</p>
       <p><strong>Best price found:</strong> {_fmt_price(cheapest)}</p>
       <table style="width:100%;border-collapse:collapse">{rows}</table>
       <p style="font-size:12px;color:#888;margin-top:24px">
