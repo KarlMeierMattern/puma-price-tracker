@@ -1,0 +1,22 @@
+{
+  "last_alerted": {
+    "runawaysport": 3899
+  },
+  "last_seen": {
+    "puma_za": {
+      "price": 3999,
+      "url": "https://za.puma.com/pd/deviate-nitrotm-4-running-shoes-men/312123.html?color=30",
+      "color_matched": true
+    },
+    "shelflife": {
+      "price": 4000,
+      "url": "https://www.shelflife.co.za/product/puma-deviate-nitro-4",
+      "color_matched": false
+    },
+    "runawaysport": {
+      "price": 3899,
+      "url": "https://runawaysport.co.za/product/puma-deviate-nitro-4-mens/",
+      "color_matched": false
+    }
+  }
+}

@@ -1,0 +1,49 @@
+product:
+  name: "Puma Deviate NITRO 4 — Slate Sky / Moody Gray"
+  style: "312123"
+  color_code: "30"
+  sku: "312123_30"
+  color_keywords:
+    - "slate sky"
+    - "moody gray"
+  retail_price: 3500
+  currency: ZAR
+  image_url: "https://images.puma.net/images/312123/30/sv01/fnd/ZAF/w/2000/h/2000/"
+
+# Alert when price is strictly below retail_price.
+# Set color_match_required: false to also alert on unverified colorway pages.
+color_match_required: false
+
+retailers:
+  - id: puma_za
+    name: "PUMA South Africa"
+    url: "https://za.puma.com/pd/deviate-nitrotm-4-running-shoes-men/312123.html?color=30"
+    scraper: json_ld
+    color_verified: true
+
+  - id: shelflife
+    name: "Shelflife"
+    url: "https://www.shelflife.co.za/product/puma-deviate-nitro-4"
+    scraper: json_ld
+    color_verified: false
+
+  - id: runawaysport
+    name: "Run-A-Way Sport"
+    url: "https://runawaysport.co.za/product/puma-deviate-nitro-4-mens/"
+    scraper: woocommerce
+    color_verified: false
+
+  - id: durbanrunner
+    name: "Durban Runner"
+    url: "https://durbanrunner.co.za/products/puma-deviate-nitro-4-mens-1"
+    scraper: shopify
+    color_verified: false
+    # Durban Runner lists multiple colourways; only track SKU ending in target color code.
+    match_sku_suffix: "30"
+
+# Add more SA retailers here as you find product pages:
+#  - id: example
+#    name: "Example Store"
+#    url: "https://example.co.za/product/..."
+#    scraper: json_ld
+#    color_verified: false
