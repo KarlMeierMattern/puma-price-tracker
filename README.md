@@ -44,7 +44,7 @@ For Shopify stores with multiple colours on one page, set `match_sku_suffix: "30
 
 ## Schedule
 
-GitHub Actions runs twice daily at **06:00 and 18:00 SAST**. Set these secrets in the repo:
+GitHub Actions runs daily at **18:00 SAST**. Set these secrets in the repo:
 
 - `RESEND_API_KEY`
 - `FROM_EMAIL`

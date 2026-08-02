@@ -2,8 +2,8 @@ name: Puma price check
 
 on:
   schedule:
-    # 06:00 and 18:00 SAST (04:00 and 16:00 UTC)
-    - cron: "0 4,16 * * *"
+    # 18:00 SAST (16:00 UTC)
+    - cron: "0 16 * * *"
   workflow_dispatch:
 
 jobs:
