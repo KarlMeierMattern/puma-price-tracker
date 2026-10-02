@@ -58,13 +58,16 @@ def scrape(retailer: dict, product_cfg: dict) -> PriceQuote:
     quote.product_name = title.get_text(strip=True) if title else ""
 
     variations = _decode_variations(html_text)
-    color_code = retailer.get("match_sku_suffix")
+    color_code = retailer.get("match_sku_suffix") or product_cfg.get("color_code")
     chosen = _pick_variation(variations, product_cfg["style"], color_code)
 
     if chosen:
         quote.price = float(chosen.get("display_price"))
         quote.sku = str(chosen.get("sku") or "")
         quote.in_stock = bool(chosen.get("is_in_stock"))
+    elif color_code and variations:
+        quote.error = f"No variation found for colour code {color_code}"
+        return quote
     else:
         amount = soup.select_one("p.price .woocommerce-Price-amount")
         if not amount:
@@ -73,5 +76,5 @@ def scrape(retailer: dict, product_cfg: dict) -> PriceQuote:
         digits = re.sub(r"[^\d.]", "", amount.get_text())
         quote.price = float(digits)
 
-    quote.color_matched = color_matched(product_cfg, html_text, quote.sku, quote.color)
+    quote.color_matched = color_matched(product_cfg, html_text, quote.sku, quote.color, retailer)
     return quote

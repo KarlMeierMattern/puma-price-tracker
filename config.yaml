@@ -1,19 +1,18 @@
 product:
-  name: "Puma Deviate NITRO 4 — Slate Sky / Moody Gray"
+  name: "Puma Deviate NITRO 4 — Slate Sky-Moody Gray"
   style: "312123"
   color_code: "30"
   sku: "312123_30"
   color_keywords:
-    - "slate sky"
-    - "moody gray"
+    - "slate sky-moody gray"
   msrp: 3999
   alert_threshold: 3500
   currency: ZAR
   image_url: "https://images.puma.net/images/312123/30/sv01/fnd/ZAF/w/2000/h/2000/"
 
 # Alert when price is strictly below alert_threshold.
-# Set color_match_required: false to also alert on unverified colorway pages.
-color_match_required: false
+# Only alert when the page matches the Slate Sky-Moody Gray colourway.
+color_match_required: true
 
 retailers:
   - id: puma_za
@@ -33,6 +32,8 @@ retailers:
     url: "https://runawaysport.co.za/product/puma-deviate-nitro-4-mens/"
     scraper: woocommerce
     color_verified: false
+    # Multiple colourways on one page; only track SKU ending in target colour code.
+    match_sku_suffix: "30"
 
   - id: durbanrunner
     name: "Durban Runner"
