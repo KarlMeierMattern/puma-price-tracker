@@ -54,8 +54,14 @@ def sku_matches_color(sku: str, style: str, color_code: str) -> bool:
     )
 
 
-def color_matched(product_cfg: dict, html_text: str, sku: str = "", color: str = "") -> bool:
-    if product_cfg.get("color_verified"):
+def color_matched(
+    product_cfg: dict,
+    html_text: str,
+    sku: str = "",
+    color: str = "",
+    retailer: Optional[dict] = None,
+) -> bool:
+    if retailer and retailer.get("color_verified"):
         return True
 
     style = product_cfg["style"]
@@ -120,5 +126,5 @@ def scrape(retailer: dict, product_cfg: dict) -> PriceQuote:
     quote.price = float(price)
     quote.currency = str(offer.get("priceCurrency") or product_cfg.get("currency") or "ZAR")
     quote.in_stock = _parse_availability(offer.get("availability"))
-    quote.color_matched = color_matched(product_cfg, html_text, quote.sku, quote.color)
+    quote.color_matched = color_matched(product_cfg, html_text, quote.sku, quote.color, retailer)
     return quote

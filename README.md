@@ -1,6 +1,6 @@
 # Puma Deviate NITRO 4 price tracker (South Africa)
 
-Checks a curated list of South African retailers for the **Slate Sky / Moody Gray** colourway (style `312123`, colour code `30`) and emails you when the price drops below **R3,500** (PUMA full price is R3,999).
+Checks a curated list of South African retailers for the **Slate Sky-Moody Gray** colourway (style `312123`, colour code `30`) and emails you when the price drops below **R3,500** (PUMA full price is R3,999).
 
 This follows the same pattern as `projects/deceased-estates`: Python scrapers, Resend email alerts, and a GitHub Actions schedule.
 
@@ -29,7 +29,7 @@ Edit `config.yaml`:
 
 - `product.alert_threshold` — email when price is below this (currently `3500`)
 - `product.msrp` — PUMA full price, used for savings in emails (`3999`)
-- `color_match_required` — when `true`, only alert if the page looks like the Slate Sky colourway
+- `color_match_required` — when `true` (default), only alert if the page matches the Slate Sky-Moody Gray colourway
 - `retailers` — add any SA product URL; use `scraper: json_ld` for most shops
 
 Supported scrapers:
@@ -56,7 +56,7 @@ GitHub Actions runs daily at **18:00 SAST**. Set these secrets in the repo:
 |------------------|----------------------------------------------------|
 | PUMA South Africa| Exact colour URL; full price R3,999                |
 | Shelflife        | Style on page; colour not always labelled          |
-| Run-A-Way Sport  | R3,899 when checked; colour not confirmed on page  |
+| Run-A-Way Sport  | Multiple colours; filtered to SKU suffix `30`      |
 | Durban Runner    | Multiple colours; filtered to SKU suffix `30`      |
 
 ## Limitations

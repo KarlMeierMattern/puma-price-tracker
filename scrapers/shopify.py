@@ -115,5 +115,5 @@ def scrape(retailer: dict, product_cfg: dict) -> PriceQuote:
             quote.price = None
             return quote
 
-    quote.color_matched = color_matched(product_cfg, html_text, quote.sku, quote.color)
+    quote.color_matched = color_matched(product_cfg, html_text, quote.sku, quote.color, retailer)
     return quote
